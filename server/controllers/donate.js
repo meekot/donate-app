@@ -11,7 +11,7 @@ class DonateController {
       };
       
     } catch (e) {
-      ctx.status = e.statusCode || e.status || 500;
+      ctx.status = e.statusCode || e.status || 400;
       ctx.body = {
         ok: false,
         error: e.name === 'ValidationError'? Object.values(e.errors).map(val => val.message): e.message
