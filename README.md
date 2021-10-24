@@ -17,7 +17,7 @@ For execute this App on your host, you need to do next steps:
 3. Installing dependencies
     * `npm install`
  
-4. Config environement (if need) *you can config BD settings, and ports for developement and production modes*
+4. Config environement (if need) *you can config DB settings, and ports for developement and production modes*
     * `vim .env`
 
 5. Run app 
