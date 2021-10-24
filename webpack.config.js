@@ -25,7 +25,7 @@ module.exports = (env, argv) => ({
     }),
     new EnvironmentPlugin({
       NODE_ENV: argv.mode,
-      API_HOST: '://' + (argv.mode === 'development'? process.env.SERVER_DEV_HOST + ':' + process.env.SERVER_PORT : process.env.SERVER_HOST )  + '/' + process.env.SERVER_BASE_API
+      API_HOST: '://' + (argv.mode === 'development'? process.env.SERVER_DEV_HOST + ':' + process.env.SERVER_PORT : process.env.FRONT_PROD_HOST )  + '/' + process.env.SERVER_BASE_API
     }),
     new VueLoaderPlugin(),
     new CleanWebpackPlugin(),
