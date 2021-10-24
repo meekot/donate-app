@@ -6,7 +6,7 @@ import mount from 'koa-mount'
 import serve from 'koa-static'
 import {port, connexionString, baseApi} from './config';
 
-import routes from './routes';
+import router from './router';
 
 mongoose.connect(connexionString);
 mongoose.connection.once('open', () => {
@@ -22,10 +22,9 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(bodyParser());
 
-app.use(mount('/' + baseApi, routes.routes()))
+app.use(mount('/' + baseApi, router.routes()));
 
 if (process.env.NODE_ENV === 'production') {
-  console.log('test')
   app.use(serve(__dirname + '/../public'));
 }
 
