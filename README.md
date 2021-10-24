@@ -21,9 +21,10 @@ For execute this App on your host, you need to do next steps:
     * `vim .env`
 
 5. Run app 
-    * dev mode front: `npm run serve-front`
-    * dev-mode back: `npm run dev-back`
     * dev mode full : `npm run dev` *after open http://localhost:8080/ in your browser*
     * prod mode full: `npm run start` *after open http://localhost:8081/ in your browser*
-    * prod mode front: `npm run build-front`
+    * dev-mode back: `npm run dev-back`
     * prod mode back: `npm run start-back`
+    * dev mode front: `npm run serve-front`
+    * prod mode front: `npm run build-front`
+
