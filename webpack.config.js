@@ -6,13 +6,21 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 require('dotenv').config()
 
+const srcDirName = 'vue' // src files dir default: src
+const distDirName = 'public' // location index.html file
+const assetsDirName = 'dist' // location js, css, fonts etc directories 
+
+
+
+const devServerPort = process.env.FRONT_DEV_PORT || 8080
+
 module.exports = (env, argv) => ({
   entry: {
-    main: './vue/main.js'
+    main: `./${srcDirName}/main.js`
   },
   output: {
-    filename: './dist/js/[name].[contenthash:8].js',
-    path: path.resolve(__dirname, 'public'),
+    filename: `./${assetsDirName}/js/[name].[contenthash:8].js`,
+    path: path.resolve(__dirname, distDirName),
     chunkFilename: '[name].[contenthash:8].js',
   },
   plugins: [
@@ -30,16 +38,16 @@ module.exports = (env, argv) => ({
     new VueLoaderPlugin(),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: './dist/css/[name].[contenthash:8].css'
+      filename: `./${assetsDirName}/css/[name].[contenthash:8].css`
     }),
     new HtmlWebpackPlugin({
-      title: 'Donate App',
-      template: path.resolve(__dirname, 'vue', 'index.html'),
+      title: 'Your app name',
+      template: path.resolve(__dirname, srcDirName, 'index.html'),
     })
   ],
   resolve: {
     alias: {
-      'vue$': argv.mode === 'development'? 'vue/dist/vue.esm-bundler.js' : 'vue/dist/vue.runtime.esm-bundler.js' // 'vue/dist/vue.common.js' для webpack 1
+      'vue$': 'vue/dist/' + (argv.mode === 'development'?  'vue.esm-bundler.js' : 'vue.runtime.esm-bundler.js')
     }
   },
   module: {  
@@ -103,7 +111,7 @@ module.exports = (env, argv) => ({
         test: /\.(woff(2)?|ttf|eot|svg)$/,
         type: 'asset/resource',
         generator: {
-          filename: 'dist/fonts/[name].[contenthash:8][ext]'
+          filename: assetsDirName + '/fonts/[name].[contenthash:8][ext]'
         }
       }
     ]
@@ -127,9 +135,9 @@ module.exports = (env, argv) => ({
   devtool: 'source-map',
   devServer: {
     static: {
-      directory: path.join(__dirname, 'public'),
+      directory: path.join(__dirname, distDirName),
     },
-    port: process.env.FRONT_DEV_PORT || 8080,
+    port: devServerPort,
     historyApiFallback: true,
   },
 })
