@@ -16,12 +16,11 @@ const devServerPort = process.env.FRONT_DEV_PORT || 8080
 
 module.exports = (env, argv) => ({
   entry: {
-    main: `./${srcDirName}/main.js`
+    main: path.resolve(__dirname, srcDirName, 'main.js')
   },
   output: {
-    filename: `./${assetsDirName}/js/[name].[contenthash:8].js`,
+    filename:  path.join(assetsDirName, 'js', '[name].[contenthash:8].js'),
     path: path.resolve(__dirname, distDirName),
-    chunkFilename: '[name].[contenthash:8].js',
   },
   plugins: [
     require('unplugin-element-plus/webpack').default({
@@ -38,7 +37,7 @@ module.exports = (env, argv) => ({
     new VueLoaderPlugin(),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: `./${assetsDirName}/css/[name].[contenthash:8].css`
+      filename: path.join(assetsDirName, 'css', '[name].[contenthash:8].css')
     }),
     new HtmlWebpackPlugin({
       title: 'Your app name',
@@ -47,7 +46,7 @@ module.exports = (env, argv) => ({
   ],
   resolve: {
     alias: {
-      'vue$': 'vue/dist/' + (argv.mode === 'development'?  'vue.esm-bundler.js' : 'vue.runtime.esm-bundler.js')
+      'vue$': path.join('vue', 'dist',  argv.mode === 'development'?  'vue.esm-bundler.js' : 'vue.runtime.esm-bundler.js')
     }
   },
   module: {  
@@ -111,7 +110,7 @@ module.exports = (env, argv) => ({
         test: /\.(woff(2)?|ttf|eot|svg)$/,
         type: 'asset/resource',
         generator: {
-          filename: assetsDirName + '/fonts/[name].[contenthash:8][ext]'
+          filename: path.join(assetsDirName, 'fonts', '[name].[contenthash:8][ext]')
         }
       }
     ]
